@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import LottieView from "lottie-react-native";
 import React, { useState } from "react";
@@ -26,35 +27,23 @@ const LoginIn = () => {
   const [userPassword, setUserPassword] = useState("");
   const [togglePassword, setTogglePassword] = useState(false);
 
-  const Navigation = useNavigation()
+  let [fontsLoaded] = useFonts({
+    "Mulish-Medium": require("../../assets/fonts/Mulish-Medium.ttf"),
+    "Raleway-ExtraLight": require("../../assets/fonts/Raleway-ExtraLight.ttf"),
+    "Raleway-Medium": require("../../assets/fonts/Raleway-Medium.ttf"),
+    "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+  });
 
-  const handleUserMail = (e) => {
-    setUserEmail(e);
-    if (!userEmail.includes("@") && !userEmail.includes(".com")) {
-      ToastAndroid.show("Please add @ and .com", ToastAndroid.SHORT);
-    } else if (userEmail.length == 0) {
-      ToastAndroid.show("Input should not be empty.", ToastAndroid.SHORT);
-    }
-  };
-
-  const handleUserPassword = (e) => {
-    setUserPassword(e);
-    if (userPassword.length == 1 || userPassword.length <= 8) {
-      ToastAndroid.show(
-        "Password Length should at least 8 characters",
-        ToastAndroid.SHORT
-      );
-    }
-  };
+  const Navigation = useNavigation();
 
   const handleLogIn = async () => {
     try {
       if (userEmail && userPassword) {
         await signInWithEmailAndPassword(auth, userEmail, userPassword);
 
-        setTimeout(()=>{
-          ToastAndroid.show('User Login Successfully',ToastAndroid.SHORT)
-        },3000)
+        setTimeout(() => {
+          ToastAndroid.show("User Login Successfully", ToastAndroid.SHORT);
+        }, 3000);
       }
     } catch (e) {
       ToastAndroid.show(e, ToastAndroid.SHORT);
@@ -65,37 +54,47 @@ const LoginIn = () => {
     <>
       <StatusBar hidden />
       <ScrollView>
-        <View className="flex-1 items-center justify-around pt-5 bg-purple-700 h-screen">
+        <View className="flex-1 items-center justify-around pt-5 bg-gray-900 h-screen">
           <LottieView
-            className="h-60 w-full"
+            className="h-80 w-full"
             source={require(path)}
             autoPlay
             loop
           />
-          <Text className="text-3xl my-8 text-white">LogIn</Text>
-          <View>
-            <View className="flex flex-row bg-white p-5 w-screen items-center justify-center mb-2 rounded-xl">
-              <AtSymbolIcon color={"red"} />
+          <Text
+            className="text-3xl my-8 text-white"
+            style={{ fontFamily: "Mulish-Medium" }}
+          >
+            LogIn
+          </Text>
+          <View style={{ width: "80%" }}>
+            <View className="flex flex-row bg-white p-3 items-center mb-2 rounded-xl">
+              <View className="mx-1">
+                <AtSymbolIcon color={"red"} />
+              </View>
               <TextInput
-                placeholder="Please Enter User Email"
+                placeholder="User Email"
                 value={userEmail}
-                onChangeText={(e) => handleUserMail(e)}
-                className="text-xl ml-3"
+                onChangeText={(e) => setUserEmail(e)}
+                className="text-xl w-[250]"
+                style={{ fontFamily: "Mulish-Medium" }}
               />
             </View>
-            <View className="flex flex-row bg-white p-5 items-center justify-center rounded-xl">
+            <View className="flex flex-row bg-white p-3 items-center rounded-xl">
               <LockClosedIcon color={"red"} />
               <TextInput
-                placeholder="Please Enter User Password"
+                placeholder="User Password"
                 value={userPassword}
-                onChangeText={(e) => handleUserPassword(e)}
+                onChangeText={(e) => setUserPassword(e)}
                 className="text-xl mx-3"
                 secureTextEntry={togglePassword}
                 multiline={false}
-                style={{ width: "70%" }}
+                style={{ width: "70%", fontFamily: "Mulish-Medium" }}
                 maxLength={16}
               />
-              <TouchableOpacity onPress={() => setTogglePassword(!togglePassword)}>
+              <TouchableOpacity
+                onPress={() => setTogglePassword(!togglePassword)}
+              >
                 {togglePassword ? (
                   <EyeIcon color={"red"} />
                 ) : (
@@ -108,16 +107,29 @@ const LoginIn = () => {
             className="my-8 bg-yellow-400 p-5 w-48 items-center rounded-xl"
             onPress={handleLogIn}
           >
-            <Text className="text-2xl"> LogIn</Text>
-          </TouchableOpacity>
-          <View className="flex-1 items-center justify-center">
-            <Text className="text-white text-lg">
-              Don't have an account{" "}
-              <TouchableOpacity className="" onPress={()=>Navigation.navigate('SignIn')}>
-                <Text className="text-white text-lg self-center ">signIn</Text>
-              </TouchableOpacity>{" "}
-              here
+            <Text className="text-2xl" style={{ fontFamily: "Raleway-Bold" }}>
+              {" "}
+              LogIn
             </Text>
+          </TouchableOpacity>
+          <View className=" flex flex-row flex-1 items-center justify-center">
+            <Text
+              className="text-white text-lg"
+              style={{ fontFamily: "Raleway-ExtraLight" }}
+            >
+              Don't have an account{" "}
+            </Text>
+            <TouchableOpacity
+              className=""
+              onPress={() => Navigation.navigate("SignIn")}
+            >
+              <Text
+                className="text-white text-lg self-center "
+                style={{ fontFamily: "Raleway-Medium" }}
+              >
+                signIn
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

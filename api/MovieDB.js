@@ -5,8 +5,8 @@ import { API_KEY } from "@env";
 const apiBaseURL = "https://api.themoviedb.org/3";
 const baseImageUrl = "https://image.tmdb.org/t/p/w500";
 
-// URL for unknow person poster.
-export const UnknownPersonPoster = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ0zVO6sACh1M3FkmSpKjHJJjgwrpU6muN2A&usqp=CAU"
+// URL for unknown person poster.
+export const UnknownPersonPoster = "https://st3.depositphotos.com/3581215/18899/v/450/depositphotos_188994514-stock-illustration-vector-illustration-male-silhouette-profile.jpg"
 
 // Common Movie fetching functions.
 const trendingMovieEndPoint = `${apiBaseURL}/trending/movie/day?api_key=${API_KEY}`;

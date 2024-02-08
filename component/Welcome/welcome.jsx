@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import LottieView from "lottie-react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { ArrowLongRightIcon } from "react-native-heroicons/outline";
 
 const animation = "../../assets/anim1.json";
@@ -12,10 +13,20 @@ const Welcome = () => {
   const handleScreenSwitch = () => {
     navigation.navigate("SignIn");
   };
+
+  let [fontsLoaded] = useFonts({
+    "Mulish-ExtraBoldItalic": require("../../assets/fonts/Mulish-ExtraBoldItalic.ttf"),
+    "Mulish-Medium": require("../../assets/fonts/Mulish-Medium.ttf"),
+  });
+
   return (
     <>
-      <View className="flex-1 flex flex-col justify-between bg-purple-700">
-        <Text className="text-4xl text-center mt-5 text-white">
+      <StatusBar hidden />
+      <View className="flex-1 flex flex-col justify-around bg-gray-900">
+        <Text
+          className="text-5xl text-center mt-5 text-white"
+          style={{ fontFamily: "Mulish-ExtraBoldItalic" }}
+        >
           Let's Get Started !!!
         </Text>
 
@@ -28,12 +39,14 @@ const Welcome = () => {
 
         <View className="items-center my-5">
           <TouchableOpacity
-            className="bg-yellow-400 justify-center p-4 rounded-2xl w-64"
+            className="bg-yellow-400 justify-center p-4 rounded-2xl w-64
+            flex flex-row"
             onPress={() => handleScreenSwitch()}
           >
-            <Text className="text-3xl self-center align-middle ml-2">
-              Welcome <ArrowLongRightIcon color={"#000"} size={35} />
+            <Text className="text-3xl align-middle ml-2" style={{fontFamily:"Mulish-Medium"}}>
+              Welcome
             </Text>
+            <ArrowLongRightIcon color={"#000"} size={35} />
           </TouchableOpacity>
         </View>
       </View>

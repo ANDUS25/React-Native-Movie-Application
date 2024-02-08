@@ -20,6 +20,7 @@ import {
 import Cast from "./Cast";
 import Loading from "./Loading";
 import MovieList from "./MovieList";
+import { useFonts } from "expo-font";
 
 const Movie = (Item) => {
   const navigation = useNavigation();
@@ -31,6 +32,12 @@ const Movie = (Item) => {
   const [similarMovies, setSimilarMovies] = useState();
   const [movie, setMovie] = useState();
   const [loading, setLoading] = useState(true);
+
+  let [fontsLoaded] = useFonts({
+    "Mulish-SemiBold": require("../../assets/fonts/Mulish-SemiBold.ttf"),
+    "Raleway-LightItalic": require("../../assets/fonts/Raleway-LightItalic.ttf"),
+    "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+  });
 
   const getMoviesDetails = async (id) => {
     const data = await fetchDynamicMovieDetails(id);
@@ -105,12 +112,12 @@ const Movie = (Item) => {
             style={{ position: "relative", bottom: 35 }}
             className="flex flex-row justify-center"
           >
-            <Text className="text-white text-4xl justify-center">
+            <Text className="text-white text-4xl justify-center" style={{fontFamily:"Mulish-SemiBold"}}>
               {movie.original_title}
             </Text>
           </View>
           <View className="items-center">
-            <Text className="text-zinc-500 text-lg">
+            <Text className="text-zinc-500 text-lg" style={{fontFamily:"Raleway-LightItalic"}}>
               {movie.status} • {movie?.release_date?.split("-")[0]} •{" "}
               {movie.runtime} min
             </Text>
@@ -125,7 +132,7 @@ const Movie = (Item) => {
               })}
             </Text>
           </View>
-          <Text className="mx-4 text-justify text-sm text-slate-200 mt-3">
+          <Text className="mx-4 text-justify text-sm text-slate-200 mt-3" style={{fontFamily:"Raleway-Bold"}}>
             {movie?.overview}
           </Text>
 

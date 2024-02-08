@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import {
@@ -25,8 +26,12 @@ const HomeScreen = () => {
   const [movieData, setMovieData] = useState();
   const [upComingMovie, setUpComingMovie] = useState();
   const [topRatedMovies, setTopRatedMovies] = useState();
-  const [popularMovies, setPopularMovies] = useState()
+  const [popularMovies, setPopularMovies] = useState();
   const [loading, setLoading] = useState(true);
+
+  let [fontsLoaded] = useFonts({
+    "Mulish-BoldItalic": require("../../assets/fonts/Mulish-BoldItalic.ttf"),
+  });
 
   const navigation = useNavigation();
 
@@ -60,8 +65,8 @@ const HomeScreen = () => {
 
   const getPopularMovies = async () => {
     const data = await fetchPopularMovies();
-    if(data && data.results){
-      setPopularMovies(data.results)
+    if (data && data.results) {
+      setPopularMovies(data.results);
     }
   };
 
@@ -79,7 +84,10 @@ const HomeScreen = () => {
         <View className="mx-4 my-5">
           <View className="flex flex-row justify-between mb-4 ">
             <Bars3CenterLeftIcon color={"#fff"} size={34} />
-            <Text className="text-3xl text-white">
+            <Text
+              className="text-3xl text-white"
+              style={{ fontFamily: "Mulish-BoldItalic" }}
+            >
               <Text className="text-yellow-300 font-extrabold">M</Text>ovie
             </Text>
             <MagnifyingGlassIcon
@@ -89,7 +97,7 @@ const HomeScreen = () => {
             />
           </View>
 
-          {loading ? (
+          {loading && fontsLoaded ? (
             <Loading />
           ) : (
             <ScrollView showsVerticalScrollIndicator={false}>
